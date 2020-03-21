@@ -1,8 +1,10 @@
 import React, {useEffect} from "react";
 import CartItem from "./CartItem";
-import {connect} from "react-redux"
+import {connect, useSelector, } from "react-redux"
 import {CLEAR_CART, GET_TOTALS} from "../types"
-const CartContainer = ({ cart = [] , total, dispatch}) => {
+const CartContainer = ({ dispatch}) => {
+  const total = useSelector(state => state.total)
+  const cart = useSelector (state => state.cart)
 
   useEffect(() => {
     dispatch({type: GET_TOTALS})
@@ -44,8 +46,5 @@ const CartContainer = ({ cart = [] , total, dispatch}) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const {cart, total} = state
-  return {cart, total}
-}
-export default connect(mapStateToProps)(CartContainer);
+
+export default connect()(CartContainer);

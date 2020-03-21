@@ -1,7 +1,11 @@
 import React from "react";
-import {INCREASE, DECREASE, REMOVE, TOGGLE_AMOUNT, removeItem} from "../types"
-import {connect} from "react-redux"
-const CartItem = ({ img, title, price, amount, remove, increase, decrease, toggle, }) => {
+import {INCREASE, DECREASE, TOGGLE_AMOUNT, removeItem} from "../types"
+import {connect, useDispatch} from "react-redux"
+const CartItem = ({ img, title, price, amount, remove, increase, decrease, toggle, id }) => {
+
+  const removeOnChange = useDispatch()
+
+
   return (
     <div className="cart-item">
       <img src={img} alt={title} />
@@ -9,7 +13,7 @@ const CartItem = ({ img, title, price, amount, remove, increase, decrease, toggl
         <h4>{title}</h4>
         <h4 className="item-price">${price}</h4>
         {/* remove button */}
-        <button className="remove-btn" onClick={() => remove()}>remove</button>
+        <button className="remove-btn" onClick={() => removeOnChange(removeItem(id))}>remove</button>
       </div>
       <div>
         {/* increase amount */}
@@ -22,7 +26,7 @@ const CartItem = ({ img, title, price, amount, remove, increase, decrease, toggl
         <p className="amount">{amount}</p>
         {/* decrease amount */}
         <button className="amount-btn"  onClick={() => {
-          amount === 1 ? remove() : toggle("decrease")
+          amount === 1 ? removeOnChange(removeItem(id)) : toggle("decrease")
         }}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
